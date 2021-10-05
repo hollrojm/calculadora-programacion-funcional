@@ -18,12 +18,12 @@ public class CalculadoraprfuncionalApplication {
 
 
 	static IntBinaryOperator multiplicacion = (a, b)-> {
-		if (b<0&&a>0){
+		if (b < 0 && a > 0){
 				int c = a;
 				a=b;
 				b=c;
 		}
-		if (b<0&&a<0){
+		if (b < 0 && a < 0){
 			a =-a;
 		}
 		int finalA = a;
@@ -34,11 +34,17 @@ public class CalculadoraprfuncionalApplication {
 
 
 	};
+	static IntBinaryOperator division = (a,b) ->{
+		return IntStream.range(0,Math.abs(a)).reduce((acumalate, number)-> multiplicacion
+				.applyAsInt(number, b) <= a ? suma
+				.applyAsInt(acumalate, 1): acumalate)
+				.getAsInt();
+	};
 
 	public static void main(String[] args) {
+		//SpringApplication.run(CalculadoraprfuncionalApplication.class, args);
 
-		System.out.println(multiplicacion.applyAsInt(-5,-2));
-		SpringApplication.run(CalculadoraprfuncionalApplication.class, args);
+		System.out.println(division.applyAsInt(5,-2));
 
 
 
